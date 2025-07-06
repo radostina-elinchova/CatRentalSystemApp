@@ -3,8 +3,8 @@ using CarRentalSystemApp.Models;
 
 namespace CarRentalSystemApp.Interfaces
 {
-    public interface ICsvReader
+    public interface ICsvReader<T>
     {
-        List<Car> ReadCars();
+        List<T> ReadItems();
     }
 }
