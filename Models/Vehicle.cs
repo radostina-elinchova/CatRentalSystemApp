@@ -18,7 +18,7 @@ namespace CarRentalSystemApp.Models
 
         public override string ToString()
         {
-            return $"{Id},{Make},{Model},{Year},{Type},{Status},{CurrentRenter}";
+            return $"{this.Id},{this.Make},{this.Model},{this.Year},{this.Type},{this.Status},{this.CurrentRenter}";
         }
     }
 }

@@ -5,7 +5,7 @@ using CarRentalSystemApp.Interfaces;
 
 namespace CarRentalSystemApp.IO
 {
-    public class CarFileWriter : ICsvWriter
+    public class CarFileWriter : ICsvWriter<Car>
     {
         private readonly string filePath;
 
@@ -14,7 +14,7 @@ namespace CarRentalSystemApp.IO
             this.filePath = filePath;
         }
 
-        public void WriteCars(List<Car> cars)
+        public void WriteItems(List<Car> cars)
         {
             try
             {

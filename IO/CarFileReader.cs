@@ -5,16 +5,16 @@ using CarRentalSystemApp.Interfaces;
 
 namespace CarRentalSystemApp.IO
 {
-    public class CarFileReader : ICsvReader
+    public class CarFileReader : ICsvReader<Car>
     {
-        private readonly string filePath;
+        private string filePath;
 
         public CarFileReader(string filePath)
         {
             this.filePath = filePath;
         }
 
-        public List<Car> ReadCars()
+        public List<Car> ReadItems()
         {
             var cars = new List<Car>();
             var lines = File.ReadAllLines(filePath);

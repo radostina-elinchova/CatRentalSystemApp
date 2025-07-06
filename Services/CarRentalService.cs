@@ -10,17 +10,24 @@ namespace CarRentalSystemApp.Services
 {
     public class CarRentalService
     {
-        private readonly ICsvReader reader;
-        private readonly ICsvWriter writer;
-        
+        private readonly ICsvReader<Car> carReader;
+        private readonly ICsvWriter<Car> carWriter;
+        private readonly ICsvReader<Customer> customerReader;
+        private readonly ICsvWriter<Customer> customerWriter;
+
+
         public List<Car> Cars { get; set; }
         private List<Customer> Customers { get; set; }
-        public CarRentalService(ICsvReader reader, ICsvWriter writer)
+        public CarRentalService(ICsvReader<Car> carReader, ICsvWriter<Car> carWriter, 
+            ICsvReader<Customer> customerReader, 
+            ICsvWriter<Customer> customerWriter)
         {
-            this.reader = reader;
-            this.writer = writer;
-            this.Cars = this.reader.ReadCars();
-            this.Customers = new List<Customer>();
+            this.carReader = carReader;
+            this.carWriter = carWriter;
+            this.customerReader = customerReader;
+            this.customerWriter = customerWriter;
+            this.Cars = this.carReader.ReadItems();
+            this.Customers = this.customerReader.ReadItems();
         }
 
         public List<Car> GetCars() => this.Cars;
@@ -93,7 +100,8 @@ namespace CarRentalSystemApp.Services
 
         public void SaveChanges()
         {
-            writer.WriteCars(Cars);
+            carWriter.WriteItems(Cars);
+            customerWriter.WriteItems(Customers);
         }
     }
 }

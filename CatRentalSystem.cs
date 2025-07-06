@@ -8,9 +8,11 @@ namespace CatRentalSystemApp
     {
         static void Main(string[] args)
         {
-            var reader = new CarFileReader("cars.csv");
-            var writer = new CarFileWriter("cars.csv");
-            var service = new CarRentalService(reader, writer);
+            var carReader = new CarFileReader("cars.csv");
+            var carWriter = new CarFileWriter("cars.csv");
+            var customerReader = new CustomerFileReader("customers.csv");
+            var customerWriter = new CustomerFileWriter("customers.csv");
+            var service = new CarRentalService(carReader, carWriter, customerReader, customerWriter);
             var manager = new RentalManager(service);
 
             Console.WriteLine("Welcome to the Car Rental System");

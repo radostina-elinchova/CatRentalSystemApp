@@ -3,8 +3,8 @@ using CarRentalSystemApp.Models;
 
 namespace CarRentalSystemApp.Interfaces
 {
-    public interface ICsvWriter
+    public interface ICsvWriter<T>
     {
-        void WriteCars(List<Car> cars);
+        void WriteItems(List<T> items);
     }
 }
