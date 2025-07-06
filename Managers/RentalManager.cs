@@ -21,7 +21,7 @@ namespace CarRentalSystemApp.Managers
             Console.WriteLine("Return Car");
             Console.WriteLine("Edit [ID]");
             Console.WriteLine("List Cars");
-            Console.WriteLine("Search Model [Model]");
+            Console.WriteLine("Search [Keyword]");
             Console.WriteLine("Remove [ID]");
             Console.WriteLine("Save & Exit");
         }
@@ -83,15 +83,15 @@ namespace CarRentalSystemApp.Managers
                         Console.WriteLine(car.ToString());
                     }
                 }
-                else if (command.StartsWith("Search Model"))
+                else if (command.StartsWith("Search"))
                 {
-                    var model = command.Substring(13).Trim().ToLower();
+                    var keyword = command.Substring(6).Trim().ToLower();
                     foreach (var car in service.GetCars())
                     {
-                        if (car.Model.ToLower().Contains(model))
+                        if (car.MatchesSearch(keyword))
                         {
                             Console.WriteLine(car.ToString());
-                        }                            
+                        }
                     }
                 }
                 else if (command.StartsWith("Remove"))

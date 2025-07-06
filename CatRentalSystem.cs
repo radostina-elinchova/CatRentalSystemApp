@@ -4,7 +4,7 @@ using CarRentalSystemApp.Managers;
 
 namespace CatRentalSystemApp
 {
-    internal class CatRentalSystem
+    public class CatRentalSystem
     {
         static void Main(string[] args)
         {

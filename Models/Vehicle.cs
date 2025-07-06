@@ -6,7 +6,27 @@ using System.Threading.Tasks;
 
 namespace CarRentalSystemApp.Models
 {
-    internal class Vehicle
+    public abstract class Vehicle
     {
+        public int Id { get; set; }
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public int Year { get; set; }
+        public string Type { get; set; }
+        public string Status { get; set; }
+        public string? CurrentRenter { get; set; }
+
+        public bool MatchesSearch(string keyword)
+        {
+            keyword = keyword.ToLower();
+            return Id.ToString().Contains(keyword)
+                || Model.ToLower().Contains(keyword)
+                || Status.ToLower().Contains(keyword);
+        }
+
+        public override string ToString()
+        {
+            return $"{Id},{Make},{Model},{Year},{Type},{Status},{CurrentRenter}";
+        }
     }
 }
