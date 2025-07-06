@@ -11,8 +11,7 @@ namespace CarRentalSystemApp.Services
     {
         private readonly ICsvReader reader;
         private readonly ICsvWriter writer;
-        private List<Car> cars;
-        private List<Customer> customers;
+        
         public List<Car> Cars { get; set; }
         private List<Customer> Customers { get; set; }
         public CarRentalService(ICsvReader reader, ICsvWriter writer)
@@ -24,7 +23,6 @@ namespace CarRentalSystemApp.Services
         }
 
         public List<Car> GetCars() => this.Cars;
-
 
         public Car GetCarById(int id) => this.Cars.FirstOrDefault(c => c.Id == id);
 
