@@ -34,11 +34,7 @@ namespace CarRentalSystemApp.Managers
                 {
                     var input = Console.ReadLine();
                     var data = input.Split(new string[] { ", " }, StringSplitOptions.None);
-                    //if (data.Length != 6)
-                    //{
-                    //    Console.WriteLine("Error: Please provide 6 fields separated by ', '");
-                    //    return true;
-                    //}
+
 
                     int id;
                     int year;
@@ -85,13 +81,36 @@ namespace CarRentalSystemApp.Managers
                 }
                 else if (command.StartsWith("Search"))
                 {
-                    var keyword = command.Substring(6).Trim().ToLower();
-                    foreach (var car in service.GetCars())
+                    var parts = command.Split(' ', 3); // [Search, Type, Value]
+                    if (parts.Length < 3)
                     {
-                        if (car.MatchesSearch(keyword))
-                        {
-                            Console.WriteLine(car.ToString());
-                        }
+                        Console.WriteLine("Invalid search command.");
+                        return true;
+                    }
+
+                    string type = parts[1].ToLower();
+                    string value = parts[2].Trim();
+
+                    var cars = service.GetCars();
+
+                    if (type == "id" && int.TryParse(value, out int id))
+                    {
+                        var car = CarSearchService.SearchById(cars, id);
+                        Console.WriteLine(car != null ? car.ToString() : "No car found with that ID.");
+                    }
+                    else if (type == "model")
+                    {
+                        var results = CarSearchService.SearchByModel(cars, value);
+                        PrintSearchResults(results);
+                    }
+                    else if (type == "status")
+                    {
+                        var results = CarSearchService.SearchByStatus(cars, value);
+                        PrintSearchResults(results);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid search type.");
                     }
                 }
                 else if (command.StartsWith("Remove"))
@@ -115,6 +134,20 @@ namespace CarRentalSystemApp.Managers
             }
 
             return true;
+        }
+        void PrintSearchResults(List<Car> results)
+        {
+            if (results.Any())
+            {
+                foreach (var car in results)
+                {
+                    Console.WriteLine(car);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No cars found.");
+            }
         }
     }
 }
