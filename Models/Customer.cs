@@ -6,7 +6,24 @@ using System.Threading.Tasks;
 
 namespace CarRentalSystemApp.Models
 {
-    internal class Customer
+    public class Customer
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Phone { get; set; }        
+        public List<Rent> Rents { get; private set; } 
+
+        public Customer(int id, string name, string phone)
+        {
+            this.Id = id;
+            this.Name = name;
+            this.Phone = phone;
+            this.Rents = new List<Rent>();
+        }
+      
+        public void AssignRent(Rent rent)
+        {
+            this.Rents.Add(rent);
+        }
     }
 }

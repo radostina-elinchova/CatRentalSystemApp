@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace CarRentalSystemApp.Interfaces
 {
-    internal interface ISearchable
+    public interface ISearchable
     {
+        bool MatchesId(int id);
+        bool MatchesModel(string model);
+        bool MatchesStatus(string status);
     }
 }

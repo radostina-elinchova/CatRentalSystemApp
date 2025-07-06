@@ -12,19 +12,24 @@ namespace CarRentalSystemApp.Services
         private readonly ICsvReader reader;
         private readonly ICsvWriter writer;
         private List<Car> cars;
-
+        private List<Customer> customers;
+        public List<Car> Cars { get; set; }
+        private List<Customer> Customers { get; set; }
         public CarRentalService(ICsvReader reader, ICsvWriter writer)
         {
             this.reader = reader;
             this.writer = writer;
-            cars = this.reader.ReadCars();
+            this.Cars = this.reader.ReadCars();
+            this.Customers = new List<Customer>();
         }
 
-        public List<Car> GetCars() => this.cars;
+        public List<Car> GetCars() => this.Cars;
 
-        public Car GetCarById(int id) => this.cars.FirstOrDefault(c => c.Id == id);
 
-        public void AddCar(Car car) => this.cars.Add(car);
+        public Car GetCarById(int id) => this.Cars.FirstOrDefault(c => c.Id == id);
+
+        public void AddCar(Car car) => this.Cars.Add(car);
+        public void AddCustomer(Customer customer) => this.Customers.Add(customer);
 
         public void EditCar(int id, string make, string model, int year, string type, string status)
         {
@@ -48,7 +53,7 @@ namespace CarRentalSystemApp.Services
             }
         }
 
-        public void RentCar(int id, string renterName)
+        public void RentCar(int id, string renterName, DateTime date)
         {
             var car = GetCarById(id);
             if (car == null)
@@ -64,8 +69,12 @@ namespace CarRentalSystemApp.Services
             }
 
             car.Status = "Rented";
-            car.CurrentRenter = renterName;
-            Console.WriteLine($"Success: Car ID {id} has been rented to {renterName}.");
+            Customer rentner = new Customer(Customers.Count + 1, renterName, "");
+            this.AddCustomer(rentner);
+            car.CurrentRenter = rentner.Name;
+            Console.WriteLine($"Success: Car ID {id} has been rented to {rentner.Name}.");
+            Rent rent = new Rent(car.Id, rentner.Id, date);
+            rentner.AssignRent(rent);
         }
 
         public void ReturnCar(int id)
@@ -74,7 +83,7 @@ namespace CarRentalSystemApp.Services
             if (car != null && car.Status == "Rented")
             {
                 car.Status = "Available";
-                car.CurrentRenter = "";
+                car.CurrentRenter = null;
             }
         }
 

@@ -14,7 +14,7 @@ namespace CarRentalSystemApp.Models
         public int Year { get; set; }
         public string Type { get; set; }
         public string Status { get; set; }
-        public string? CurrentRenter { get; set; }        
+        public String? CurrentRenter { get; set; }        
 
         public override string ToString()
         {

@@ -51,7 +51,7 @@ namespace CarRentalSystemApp.Managers
                         year,
                         data[4].Trim(),
                         data[5].Trim(),
-                        string.Empty
+                        null
                     );
                     service.AddCar(car);
                     Console.WriteLine("Car added successfully.");
@@ -59,7 +59,7 @@ namespace CarRentalSystemApp.Managers
                 else if (command.StartsWith("Rent Car"))
                 {
                     var data = Console.ReadLine().Split(',');
-                    service.RentCar(int.Parse(data[0]), data[1].Trim());
+                    service.RentCar(int.Parse(data[0]), data[1].Trim(), DateTime.Parse(data[2].Trim()));
                 }
                 else if (command.StartsWith("Return Car"))
                 {
@@ -94,19 +94,22 @@ namespace CarRentalSystemApp.Managers
                     var cars = service.GetCars();
 
                     if (type == "id" && int.TryParse(value, out int id))
-                    {
-                        var car = CarSearchService.SearchById(cars, id);
+                    {                        
+                        var car = cars.FirstOrDefault(c => c.MatchesId(id));
+                        
                         Console.WriteLine(car != null ? car.ToString() : "No car found with that ID.");
                     }
                     else if (type == "model")
                     {
-                        var results = CarSearchService.SearchByModel(cars, value);
-                        PrintSearchResults(results);
+                        var carsByModel = cars.Where(c => c.MatchesModel(value)).ToList();
+                        
+                        PrintSearchResults(carsByModel);
                     }
                     else if (type == "status")
-                    {
-                        var results = CarSearchService.SearchByStatus(cars, value);
-                        PrintSearchResults(results);
+                    {                      
+                        var carsByStatus = cars.Where(c => c.MatchesStatus(value)).ToList();
+
+                        PrintSearchResults(carsByStatus);
                     }
                     else
                     {
