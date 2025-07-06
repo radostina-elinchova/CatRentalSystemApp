@@ -1,8 +1,9 @@
+using CarRentalSystemApp.Interfaces;
+using CarRentalSystemApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CarRentalSystemApp.Interfaces;
-using CarRentalSystemApp.Models;
+using System.Xml.Linq;
 
 
 namespace CarRentalSystemApp.Services
@@ -67,7 +68,12 @@ namespace CarRentalSystemApp.Services
             }
 
             car.Status = "Rented";
-            Customer rentner = new Customer(Customers.Count + 1, renterName, "");
+            Customer rentner = Customers.Find(c => c.Name.Equals(renterName, StringComparison.OrdinalIgnoreCase));
+            if (rentner == null)
+            {
+                rentner = new Customer(Customers.Count + 1, renterName, "");
+            }
+            
             this.AddCustomer(rentner);
             car.CurrentRenter = rentner.Name;
             Console.WriteLine($"Success: Car ID {id} has been rented to {rentner.Name}.");
@@ -87,7 +93,7 @@ namespace CarRentalSystemApp.Services
 
         public void SaveChanges()
         {
-            writer.WriteCars(cars);
+            writer.WriteCars(Cars);
         }
     }
 }
