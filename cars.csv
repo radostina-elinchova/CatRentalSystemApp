@@ -1,0 +1,11 @@
+Id,Make,Model,Year,Type,Status,CurrentRenter
+1,Toyota,Corolla,2019,Sedan,Available,
+2,Ford,Focus,2020,Hatchback,Rented,Jane Smith
+3,Audi,A4,2022,Sedan,Available,
+4,BMW,X5,2021,SUV,Available,
+5,Mercedes,C200,2018,Sedan,Rented,Ivan Ivanov
+6,Volkswagen,Golf,2023,Hatchback,Available,
+7,Nissan,Qashqai,2022,SUV,Available,
+8,Skoda,Octavia,2020,Sedan,Rented,Maria Petrova
+9,Peugeot,208,2021,Hatchback,Available,
+10,Hyundai,Tucson,2023,SUV,Available,
